@@ -1,15 +1,20 @@
 import {useState} from 'react'
 
 const AddTask = ({onAdd}) => {
-    const [text, setText] = useState(' ')
-    const [day, setDay] = useState(' ')
+    const [text, setText] = useState('')
+    const [day, setDay] = useState('')
     const [reminder, setReminder] = useState(false)
 
     const onSubmit = (e) =>{
         e.preventDefault()
 
         if(!text) {
-            alert('PLease add task')
+            alert('Please add task')
+            return
+        }
+        
+        if (!day) {
+            alert('Please add a date and time')
             return
         }
 
@@ -46,5 +51,7 @@ const AddTask = ({onAdd}) => {
         </form>
     )
 }
+
+
 
 export default AddTask

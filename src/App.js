@@ -2,6 +2,7 @@ import {useState} from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
+import Firebase from './firebase'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState (false)
@@ -31,11 +32,14 @@ const addTask = (task) => {
   const id = (Math.floor(Math.random() * 10000) + 1)
   const newTask = {id, ...task}
   setTasks([...tasks, newTask])
+  localStorage.setItem('todolist', JSON.stringify([...tasks, newTask]))
 }
 
 //delete tasks
 const deleteTask = (id) =>{
-  setTasks(tasks.filter((task) => task.id !== id))
+  const newTasks = tasks.filter((task) => task.id !== id)
+  setTasks(newTasks)
+  localStorage.setItem('todolist', JSON.stringify(newTasks))
 }
 
 //Toggle Reminder
@@ -46,6 +50,7 @@ const toggleReminder = (id) => {
     )
 }
 
+console.log(localStorage.getItem('todolist'))
   return (
     <div className='container'>
       <Header onAdd = {() => setShowAddTask (!showAddTask)} showAdd = {showAddTask}/>
@@ -55,7 +60,7 @@ const toggleReminder = (id) => {
       onDelete = {deleteTask}
       onToggle = {toggleReminder}/> 
         ) : (
-          "There are no Tasks left "
+          "There are no Tasks left to show "
           )}
     </div>
    
